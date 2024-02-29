@@ -1,31 +1,35 @@
 package com.marcelinx.consultadentista.config;
 
-import java.util.Arrays;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
-import com.marcelinx.consultadentista.Repository.DentistaRepository;
-import com.marcelinx.consultadentista.entities.Dentista;
-
-
+import com.marcelinx.consultadentista.model.Cliente;
+import com.marcelinx.consultadentista.model.Dentista;
+import com.marcelinx.consultadentista.repository.ClienteRepository;
+import com.marcelinx.consultadentista.repository.DentistaRepository;
 
 @Configuration
 @Profile("test")
-public class TestConfig implements CommandLineRunner {
+public class TestConfig {
 
-  @Autowired
-  private DentistaRepository dentistaRepository;
+  @Bean
+  public CommandLineRunner initDataBase(DentistaRepository dentistaRepository, ClienteRepository clienteRepository) {
+    return args -> {
+      dentistaRepository.deleteAll();
+      clienteRepository.deleteAll();
 
-  @Override
-  public void run(String... args) throws Exception {
+      Dentista d1 = new Dentista();
+      d1.setName("João");
+      d1.setCategory("Geral");
+      d1 = dentistaRepository.save(d1);
 
-    Dentista u1 = new Dentista(null, "João", "joao@gmail.com", "Geral", "1111", "12345");
-    Dentista u2 = new Dentista(null, "Beatryz", "beatryz@gmail.com", "Ortodontia", "12345", "1111");
+      Cliente c1 = new Cliente();
+      c1.setNome("Maria");
+      c1.setEmail("maria@example.com");
+      c1.setDentista(d1);
 
-    dentistaRepository.saveAll(Arrays.asList(u1, u2));
+      clienteRepository.save(c1);
+    };
   }
-
 }
