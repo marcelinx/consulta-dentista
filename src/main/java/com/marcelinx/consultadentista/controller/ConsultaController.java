@@ -16,45 +16,54 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marcelinx.consultadentista.Repository.ClienteRepository;
+import com.marcelinx.consultadentista.Repository.ConsultaRepository;
+import com.marcelinx.consultadentista.model.Agenda;
 import com.marcelinx.consultadentista.model.Cliente;
+import com.marcelinx.consultadentista.model.Consulta;
+import com.marcelinx.consultadentista.model.Dentista;
 
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/consultorio/clientes")
+@RequestMapping("/consultorio/consultas")
 @AllArgsConstructor
-public class ClienteController {
+public class ConsultaController {
+
 
 	
   @Autowired
-  private  ClienteRepository clienteRepository;
+  private  ConsultaRepository consultaRepository;
 
   @GetMapping
-  public @ResponseBody List<Cliente> list() {
-    return clienteRepository.findAll();
+  public @ResponseBody List<Consulta> list() {
+    return consultaRepository.findAll();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Cliente> findById(@PathVariable Long id) {
-    return clienteRepository.findById(id)
-        .map(cliente -> ResponseEntity.ok().body(cliente))
+  public ResponseEntity<Consulta> findById(@PathVariable Long id) {
+    return consultaRepository.findById(id)
+        .map(consulta -> ResponseEntity.ok().body(consulta))
         .orElse(ResponseEntity.notFound().build());
   }
 
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
-  public Cliente create(@RequestBody Cliente cliente) {
-    return clienteRepository.save(cliente);
+  public Consulta create(@RequestBody Consulta consulta) {
+    return consultaRepository.save(consulta);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Cliente> update(@PathVariable Long id, @RequestBody Cliente clienteDetalhes) {
-    return clienteRepository.findById(id)
-        .map(cliente -> {
-          cliente.setNome(clienteDetalhes.getNome());
-          cliente.setEmail(clienteDetalhes.getEmail());
-          Cliente updated = clienteRepository.save(cliente);
+  public ResponseEntity<Consulta> update(@PathVariable Long id, @RequestBody Consulta consultaDetalhes, @RequestBody Dentista dentista, @RequestBody Cliente cliente, @RequestBody Agenda agenda) {
+	  
+	  return consultaRepository.findById(id)
+        .map(consulta -> {
+          consulta.setLocalTime(consultaDetalhes.getLocalTime());
+          consulta.setDentista(consultaDetalhes.getDentista());
+          consulta.setCliente(consultaDetalhes.getCliente());
+          consulta.setAgenda(consultaDetalhes.getAgenda());
+          
+          Consulta updated = consultaRepository.save(consulta);
+          
           return ResponseEntity.ok().body(updated);
         })
         .orElse(ResponseEntity.notFound().build());
@@ -62,9 +71,9 @@ public class ClienteController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<?> delete(@PathVariable Long id) {
-    return clienteRepository.findById(id)
-        .map(cliente -> {
-          clienteRepository.deleteById(id);
+    return consultaRepository.findById(id)
+        .map(consulta -> {
+          consultaRepository.deleteById(id);
           return ResponseEntity.noContent().<Void>build(); 
         })
         .orElse(ResponseEntity.notFound().build());

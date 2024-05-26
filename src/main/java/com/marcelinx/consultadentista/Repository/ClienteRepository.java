@@ -1,4 +1,4 @@
-package com.marcelinx.consultadentista.repository;
+package com.marcelinx.consultadentista.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
