@@ -1,20 +1,13 @@
 package com.marcelinx.consultadentista.model;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import jakarta.persistence.OneToMany;
 
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -36,16 +29,9 @@ public final class Dentista implements Serializable  {
 
 	@Column(length = 12, nullable = false, name = "ds_categoria")
 	private String category;
-
-	@OneToMany(mappedBy = "dentista")
-	private List<Agenda> agendas;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "dentista")
-	private List<Consulta> consultas;
 	
 	public Dentista() {
-	};
+	}
 
 	public Dentista(Long id, String name, String category) {
 		this.id = id;
@@ -53,13 +39,6 @@ public final class Dentista implements Serializable  {
 		this.category = category;
 	}
 
-	public void adicionarAgenda(Agenda agendas) {
-		this.agendas.add(agendas);
-	}
-	
-	public void adicionarConsulta(Consulta consulta) {
-		this.consultas.add(consulta);
-	}
 
 	public Long getId() {
 		return id;
@@ -97,13 +76,5 @@ public final class Dentista implements Serializable  {
 		Dentista other = (Dentista) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	@Override
-	public String toString() {
-		return "Dentista [id=" + id + ", name=" + name + ", category=" + category + ", agendas=" + agendas
-				+ ", consultas=" + consultas + "]";
-	}
-	
-	
 
 }

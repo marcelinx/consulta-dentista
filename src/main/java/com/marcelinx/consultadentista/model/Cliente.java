@@ -3,8 +3,6 @@ package com.marcelinx.consultadentista.model;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,15 +30,6 @@ public class Cliente {
 	@Column(length = 100, nullable = false, name = "ds_email")
 	private String email;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "cliente")
-	private List<Consulta> consultas;
-	
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "cliente")
-	private Agenda agenda;
-	
 	public Cliente() {}
 	
 	public Cliente(Long id, String nome, String email) {
@@ -48,11 +37,7 @@ public class Cliente {
 		this.nome = nome;
 		this.email = email;
 	}
-	
-	public void adicionarConsulta(Consulta consulta) {
-		this.consultas.add(consulta);
-	}
-	
+		
 	public Long getId() {
 		return id;
 	}

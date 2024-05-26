@@ -36,9 +36,6 @@ public class Agenda implements Serializable {
 	@Column(length = 200, nullable = false, name = "dh_data")
 	private LocalDate date;
 
-	@OneToMany(mappedBy = "agenda")
-	private List<Consulta> consulta = new ArrayList<>();
-	
 	
 	@OneToOne
     @JoinColumn(name = "fk_cliente")
@@ -57,12 +54,7 @@ public class Agenda implements Serializable {
 
 	public Agenda() {
 	}
-
-	public void adicionarConsulta(Consulta consulta) {
-		this.consulta.add(consulta);
-	}
-	
-	
+		
 	public Long getId() {
 		return id;
 	}
@@ -77,15 +69,6 @@ public class Agenda implements Serializable {
 
 	public void setDate(LocalDate date) {
 		this.date = date;
-	}
-
-	public List<Consulta> getConsulta() {
-		return consulta;
-	}
-	
-	
-	public void setConsulta(List<Consulta> consulta) {
-		this.consulta = consulta;
 	}
 
 	public Cliente getCliente() {

@@ -22,14 +22,12 @@ import com.marcelinx.consultadentista.model.Dentista;
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
-
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
 	@Autowired
 	private DentistaRepository dentistaRepository;
-	
 	
 	@Autowired
 	private	ConsultaRepository consultaRepository;
@@ -45,8 +43,7 @@ public class TestConfig implements CommandLineRunner{
 		var d2 = new Dentista(null, "Otavio2", "Geral");
 		var cc1 = new Consulta(null,LocalTime.now(), c1, d1);
 		var a1 = new Agenda(null, LocalDate.now(), cc1.getCliente(), cc1.getDentista());
-			
-		a1.adicionarConsulta(cc1);
+		
 		cc1.setAgenda(a1);
 	
 		

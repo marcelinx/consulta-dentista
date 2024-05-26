@@ -3,8 +3,6 @@ package com.marcelinx.consultadentista.model;
 import java.time.LocalTime;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,18 +25,15 @@ public class Consulta {
 	@Column(length = 200, nullable = false, name = "dh_hora")
 	private LocalTime  hora;
 	
-	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "fk_cliente")
 	private Cliente cliente;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn( name = "fk_dentista")
 	private Dentista dentista;
 	
-	
-	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "fk_agenda")
 	private Agenda agenda;
 	

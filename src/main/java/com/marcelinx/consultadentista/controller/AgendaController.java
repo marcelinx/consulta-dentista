@@ -55,7 +55,6 @@ public class AgendaController {
         	agenda.setDate(agendaDetalhes.getDate());
         	agenda.setCliente(agendaDetalhes.getCliente());
         	agenda.setDentista(agendaDetalhes.getDentista());
-        	agenda.setConsulta(agendaDetalhes.getConsulta());
           Agenda updated = agendaRepository.save(agenda);
           return ResponseEntity.ok().body(updated);
         })
