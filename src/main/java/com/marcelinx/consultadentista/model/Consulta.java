@@ -3,6 +3,8 @@ package com.marcelinx.consultadentista.model;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +23,8 @@ public class Consulta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
+	
+	@JsonFormat(pattern = "HH:mm")
 	@Column(length = 200, nullable = false, name = "dh_hora")
 	private LocalTime  hora;
 	
@@ -54,11 +57,16 @@ public class Consulta {
 	public void setid(Long id) {
 		this.id = id;
 	}
+	
+	public LocalTime getHora() {
+        return hora;
+    }
 
-	public LocalTime getLocalTime() {
-		return hora;
-	}
-
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
+    }
+    
+    
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -81,10 +89,6 @@ public class Consulta {
 
 	public void setAgenda(Agenda agenda) {
 		this.agenda = agenda;
-	}
-
-	public void setLocalTime(LocalTime hora) {
-		this.hora = hora;
 	}
 
 	

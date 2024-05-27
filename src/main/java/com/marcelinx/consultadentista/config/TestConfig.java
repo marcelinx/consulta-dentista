@@ -41,7 +41,7 @@ public class TestConfig implements CommandLineRunner {
         var d1 = new Dentista(null, "Otavio", "Geral", "1234", "Rua XYZ, 456", "987654321");
         var d2 = new Dentista(null, "Otavio2", "Geral", "5678", "Rua UVW, 789", "654321987");
         var cc1 = new Consulta(null, LocalTime.now(), c1, d1);
-        var a1 = new Agenda(null, LocalDate.now(), cc1.getCliente(), cc1.getDentista());
+        var a1 = new Agenda(null, LocalDate.of(2024, 5, 26), cc1.getCliente(), cc1.getDentista());
         
         cc1.setAgenda(a1);
     

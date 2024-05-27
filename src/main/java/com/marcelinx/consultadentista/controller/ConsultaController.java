@@ -29,8 +29,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ConsultaController {
 
-
-	
   @Autowired
   private  ConsultaRepository consultaRepository;
 
@@ -57,7 +55,7 @@ public class ConsultaController {
 	  
 	  return consultaRepository.findById(id)
         .map(consulta -> {
-          consulta.setLocalTime(consultaDetalhes.getLocalTime());
+          consulta.setHora(consultaDetalhes.getHora());
           consulta.setDentista(consultaDetalhes.getDentista());
           consulta.setCliente(consultaDetalhes.getCliente());
           consulta.setAgenda(consultaDetalhes.getAgenda());
