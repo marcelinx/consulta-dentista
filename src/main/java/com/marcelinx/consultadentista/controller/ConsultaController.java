@@ -28,6 +28,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ConsultaController {
 
+
     @Autowired
     private ConsultaRepository consultaRepository;
 

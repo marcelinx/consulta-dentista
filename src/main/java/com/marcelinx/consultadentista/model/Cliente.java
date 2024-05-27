@@ -4,13 +4,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 import lombok.Data;
 
 @Data
@@ -30,7 +31,8 @@ public class Cliente {
 
     @Column(length = 20, name = "ds_telefone")
     private String telefone;
-
+    
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "dt_nascimento")
     private LocalDate dataNascimento;
 

@@ -3,6 +3,8 @@ package com.marcelinx.consultadentista.model;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,89 +20,98 @@ import lombok.Data;
 @Table(name = "tb_consulta")
 public class Consulta {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@JsonFormat(pattern = "HH:mm")
+	@Column(length = 200, nullable = false, name = "dh_hora")
+	private LocalTime  hora;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "fk_cliente")
+	private Cliente cliente;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn( name = "fk_dentista")
+	private Dentista dentista;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "fk_agenda")
+	private Agenda agenda;
+	
+	public Consulta(Long id, LocalTime hora, Cliente cliente, Dentista dentista) {
+		this.id = id;
+		this.hora = hora;
+		this.dentista = dentista;
+		this.cliente = cliente;
+	}
 
-    @Column(length = 200, nullable = false, name = "dh_hora")
-    private LocalTime hora;
+	public Consulta() {
+	}
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "fk_cliente")
-    private Cliente cliente;
+	public Long getid() {
+		return id;
+	}
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "fk_dentista")
-    private Dentista dentista;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "fk_agenda")
-    private Agenda agenda;
-
-    public Consulta(Long id, LocalTime hora, Cliente cliente, Dentista dentista) {
-        this.id = id;
-        this.hora = hora;
-        this.dentista = dentista;
-        this.cliente = cliente;
-    }
-
-    public Consulta() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalTime getLocalTime() {
+	public void setid(Long id) {
+		this.id = id;
+	}
+	
+	public LocalTime getHora() {
         return hora;
     }
 
-    public void setLocalTime(LocalTime hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
+    
+    
+	public Cliente getCliente() {
+		return cliente;
+	}
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+	public Dentista getDentista() {
+		return dentista;
+	}
 
-    public Dentista getDentista() {
-        return dentista;
-    }
+	public void setDentista(Dentista dentista) {
+		this.dentista = dentista;
+	}
 
-    public void setDentista(Dentista dentista) {
-        this.dentista = dentista;
-    }
+	public Agenda getAgenda() {
+		return agenda;
+	}
 
-    public Agenda getAgenda() {
-        return agenda;
-    }
+	public void setAgenda(Agenda agenda) {
+		this.agenda = agenda;
+	}
 
-    public void setAgenda(Agenda agenda) {
-        this.agenda = agenda;
-    }
+	
+	@Override
+	public String toString() {
+		return "Consulta [id=" + id + ", hora=" + hora +  "]";
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Consulta other = (Consulta) obj;
-        return Objects.equals(id, other.id);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Consulta other = (Consulta) obj;
+		return Objects.equals(id, other.id);
+	}
+	
 }

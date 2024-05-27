@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +24,10 @@ public class Agenda implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(length = 200, nullable = false, name = "dh_data")
+	private LocalDate date;
+  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
