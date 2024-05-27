@@ -38,8 +38,8 @@ public class TestConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
         
         var c1 = new Cliente(null, "Marcelino", "marcelino@gmail.com", "123456789", LocalDate.of(1990, 5, 26), "Masculino", "Rua ABC, 123");
-        var d1 = new Dentista(null, "Otavio", "Geral", "1234", "Rua XYZ, 456", "987654321");
-        var d2 = new Dentista(null, "Otavio2", "Geral", "5678", "Rua UVW, 789", "654321987");
+        var d1 = new Dentista(null, "Otavio", "Geral", "1234-SP", "Rua XYZ, 456", "987654321");
+        var d2 = new Dentista(null, "Carlos Roberto", "Geral", "5678-SP", "Rua UVW, 789", "654321987");
         var cc1 = new Consulta(null, LocalTime.now(), c1, d1);
         var a1 = new Agenda(null, LocalDate.now(), cc1.getCliente(), cc1.getDentista());
         
