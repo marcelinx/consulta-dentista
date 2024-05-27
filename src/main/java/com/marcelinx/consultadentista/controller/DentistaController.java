@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marcelinx.consultadentista.Repository.ConsultaRepository;
 import com.marcelinx.consultadentista.Repository.DentistaRepository;
-import com.marcelinx.consultadentista.model.Consulta;
 import com.marcelinx.consultadentista.model.Dentista;
 
 import lombok.AllArgsConstructor;
@@ -28,50 +26,50 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class DentistaController {
 
-@Autowired
-  private  DentistaRepository dentistaRepository;
+    @Autowired
+    private DentistaRepository dentistaRepository;
 
-  @GetMapping
-  public @ResponseBody List<Dentista> list() {
-    return dentistaRepository.findAll();
-  }
+    @GetMapping
+    public @ResponseBody List<Dentista> list() {
+        return dentistaRepository.findAll();
+    }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Dentista> findById(@PathVariable Long id) {
-    return dentistaRepository.findById(id)
-        .map(recordFound -> ResponseEntity.ok().body(recordFound))
-        .orElse(ResponseEntity.notFound().build());
-  }
+    @GetMapping("/{id}")
+    public ResponseEntity<Dentista> findById(@PathVariable Long id) {
+        return dentistaRepository.findById(id)
+                .map(dentista -> ResponseEntity.ok().body(dentista))
+                .orElse(ResponseEntity.notFound().build());
+    }
 
-  @PostMapping
-  @ResponseStatus(code = HttpStatus.CREATED)
-  public Dentista create(@RequestBody Dentista Dentista) {
-    return dentistaRepository.save(Dentista);
-  }
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Dentista create(@RequestBody Dentista dentista) {
+        return dentistaRepository.save(dentista);
+    }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<Dentista> update(@PathVariable Long id, @RequestBody Dentista Dentista ) {
-	  
-	  return dentistaRepository.findById(id)
-        .map(recordFound -> {
-          recordFound.setName(Dentista.getName());
-          recordFound.setCategory(Dentista.getCategory());
+    @PutMapping("/{id}")
+    public ResponseEntity<Dentista> update(@PathVariable Long id, @RequestBody Dentista dentista) {
+        return dentistaRepository.findById(id)
+                .map(recordFound -> {
+                    recordFound.setName(dentista.getName());
+                    recordFound.setCategory(dentista.getCategory());
+                    recordFound.setCro(dentista.getCro());
+                    recordFound.setEndereco(dentista.getEndereco());
+                    recordFound.setTelefone(dentista.getTelefone());
 
-          Dentista updated = dentistaRepository.save(recordFound);
+                    Dentista updated = dentistaRepository.save(recordFound);
+                    return ResponseEntity.ok().body(updated);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 
-          return ResponseEntity.ok().body(updated);
-
-        })
-        .orElse(ResponseEntity.notFound().build());
-  }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity<?> delete(@PathVariable Long id) {
-	    return dentistaRepository.findById(id)
-	        .map(dentista -> {
-	        	dentistaRepository.deleteById(id);
-	          return ResponseEntity.noContent().<Void>build(); 
-	        })
-	        .orElse(ResponseEntity.notFound().build());
-	  }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        return dentistaRepository.findById(id)
+                .map(dentista -> {
+                    dentistaRepository.deleteById(id);
+                    return ResponseEntity.noContent().<Void>build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

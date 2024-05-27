@@ -26,9 +26,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ClienteController {
 
-	
   @Autowired
-  private  ClienteRepository clienteRepository;
+  private ClienteRepository clienteRepository;
 
   @GetMapping
   public @ResponseBody List<Cliente> list() {
@@ -54,6 +53,10 @@ public class ClienteController {
         .map(cliente -> {
           cliente.setNome(clienteDetalhes.getNome());
           cliente.setEmail(clienteDetalhes.getEmail());
+          cliente.setTelefone(clienteDetalhes.getTelefone());
+          cliente.setDataNascimento(clienteDetalhes.getDataNascimento());
+          cliente.setSexo(clienteDetalhes.getSexo());
+          cliente.setEndereco(clienteDetalhes.getEndereco());
           Cliente updated = clienteRepository.save(cliente);
           return ResponseEntity.ok().body(updated);
         })
